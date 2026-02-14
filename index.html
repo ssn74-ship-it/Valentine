@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Game 💖</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    color: white;
+    text-align: center;
+    padding: 30px;
+    overflow: hidden;
+  }
+
+  .box {
+    background: rgba(255,255,255,0.2);
+    padding: 25px;
+    border-radius: 20px;
+    max-width: 90%;
+    margin: auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  button {
+    background: white;
+    color: #ff4d6d;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    margin: 10px;
+  }
+
+  input {
+    padding: 10px;
+    border-radius: 15px;
+    border: none;
+    width: 80%;
+    font-size: 16px;
+  }
+
+  /* MOBILE ONLY */
+  @media (min-width: 768px) {
+    body { display: none; }
+  }
+
+  /* HEART ANIMATION */
+  .heart {
+    position: absolute;
+    bottom: -20px;
+    font-size: 24px;
+    animation: floatUp 4s linear infinite;
+    opacity: 0.8;
+  }
+
+  @keyframes floatUp {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-600px) scale(1.5);
+      opacity: 0;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="box" id="game">
+  <h2>🎮 Hi Heti 💕</h2>
+  <p>Level 1: When did we first start talking? (year)</p>
+  <input id="answer" placeholder="Type here">
+  <br>
+  <button onclick="check()">Submit</button>
+</div>
+
+<script>
+let level = 1;
+
+function check() {
+  const ans = document.getElementById("answer").value.trim().toLowerCase();
+  const game = document.getElementById("game");
+
+  if (level === 1 && ans === "2025") {
+    level = 2;
+    game.innerHTML = `
+      <h2>🎮 Level 2</h2>
+      <p><b>You make my ____ better.</b></p>
+      <input id="answer" placeholder="Your answer">
+      <br>
+      <button onclick="check()">Submit</button>
+    `;
+  } 
+  else if (level === 2 && ans === "day") {
+    game.innerHTML = `
+      <h2>🏆 Final Level</h2>
+      <p>Choose your reward 🎁</p>
+      <button onclick="final()">Coffee ☕</button>
+      <button onclick="final()">Movie 🎬</button>
+    `;
+  } 
+  else {
+    alert("Try again 😅");
+  }
+}
+
+function final() {
+  document.getElementById("game").innerHTML = `
+    <h2>💖 Heti 💖</h2>
+    <p>Will you be my Valentine? ❤️</p>
+    <button onclick="yes()">YES 💘</button>
+    <button onclick="no()">NO 🙈</button>
+  `;
+}
+
+function yes() {
+  document.getElementById("game").innerHTML = `
+    <h2>🥰 YAY!</h2>
+    <p>Best Valentine ever 💕</p>
+    <p>I’m really lucky to have you, Heti ❤️</p>
+  `;
+  startHearts();
+}
+
+function no() {
+  alert("Try again 😏");
+}
+
+/* HEARTS */
+function startHearts() {
+  for (let i = 0; i < 20; i++) {
+    createHeart();
+  }
+}
+
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 5000);
+}
+</script>
+
+</body>
+</html>
